@@ -77,7 +77,7 @@ function createReceiptList(goodsNumList) {
 
 }
 
-function totalPriceAndFreePrice(result) {
+function countTotalPriceAndFreePrice(result) {
   let totalPrice = 0;
   let freePrice = 0;
   for (let item of result) {
@@ -100,7 +100,7 @@ function printResult(resultArray,receiptObj) {
 
 function printReceipt(inputs) {
   let receiptArray = createReceiptList(countGoodsList(converSpecialStringInList(inputs)));
-  let obj = totalPriceAndFreePrice(receiptArray);
+  let obj = countTotalPriceAndFreePrice(receiptArray);
   printResult(receiptArray,obj);
 }
 
