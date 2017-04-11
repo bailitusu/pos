@@ -58,7 +58,7 @@ function judgeAttendDiscount(item) {
   return false;
 }
 
-function receiptList(goodsNumList) {
+function createReceiptList(goodsNumList) {
 
   return goodsNumList.map(goods => {
     for(let item of loadAllItems()) {
@@ -87,18 +87,24 @@ function totalPriceAndFreePrice(result) {
   return {totalPrice: totalPrice, freePrice: freePrice};
 }
 
-function printReceipt(inputs) {
-  let receiptArray = receiptList(countGoodsList(converSpecialStringInList(inputs)));
-  let obj = totalPriceAndFreePrice(receiptArray);
+function printResult(resultArray,receiptObj) {
   let receiptText = "***<没钱赚商店>收据***\n";
-  for(let item of receiptArray) {
+  for(let item of resultArray) {
     receiptText = receiptText+`名称：${item.name}，数量：${item.num}${item.unit}，单价：${parseFloat(item.price).toFixed(2)}(元)，`
       +`小计：${parseFloat(item.subtotal).toFixed(2)}(元)`+"\n";
   }
-  receiptText = receiptText + `----------------------\n总计：${parseFloat(obj.totalPrice).toFixed(2)}(元)\n`
-    +`节省：${parseFloat(obj.freePrice).toFixed(2)}(元)\n**********************`;
+  receiptText = receiptText + `----------------------\n总计：${parseFloat(receiptObj.totalPrice).toFixed(2)}(元)\n`
+    +`节省：${parseFloat(receiptObj.freePrice).toFixed(2)}(元)\n**********************`;
   console.log(receiptText);
 }
+
+function printReceipt(inputs) {
+  let receiptArray = createReceiptList(countGoodsList(converSpecialStringInList(inputs)));
+  let obj = totalPriceAndFreePrice(receiptArray);
+  printResult(receiptArray,obj);
+}
+
+
 
 function thisArrayContainsThisObj(inputArray,obj) {
   for(let item of inputArray) {
